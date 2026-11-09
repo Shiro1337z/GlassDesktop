@@ -1,0 +1,2 @@
+/* Preset: Midnight - deep blue-black glass. */
+html:root { --glass-tint-rgb: 6, 10, 26; --glass-line: rgba(120, 150, 255, .12); --glass-line-strong: rgba(120, 150, 255, .2); }

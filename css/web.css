@@ -1,0 +1,129 @@
+/*
+ * Glass Desktop - Store, Community, Help and other Steam web pages.
+ *
+ * Same look as the library: the page background is the colour key rgb(1, 14, 22), so you
+ * see through to your desktop. Steam's per-game background art (e.g. the
+ * CS2 art on Community / store pages) is removed. Content blocks stay as
+ * dark smoked glass so text is readable.
+ *
+ * Profile pages are NOT matched by skin.json, so profile backgrounds stay.
+ */
+
+:root {
+  --glass-mode-a: calc(var(--glass-panel-pct, 78) / 100);
+  --glass-a: min(1, calc(var(--glass-mode-a) * var(--glass-tint-pct, 100) / 100));
+  --glass-edge-a: calc(var(--glass-bar-pct, 0) / 100);
+  --glass-halo-k: calc(var(--glass-halo-pct, 100) / 100);
+}
+
+/* Colour-key guard: no picture can contain the key colour (see glass.css). */
+img,
+video,
+canvas,
+picture {
+  filter: contrast(.98);
+}
+
+html,
+body,
+body.v6,
+body.flat_page,
+body.headerless_page,
+.responsive_page_frame,
+.responsive_page_content,
+.responsive_page_template_content,
+.responsive_page_content_overlay,
+.page_background_holder,
+.page_background_overlay,
+.game_page_background,
+.game_page_background.game,
+.apphub_background,
+.apphub_HomeHeaderContent,
+.community_home,
+.community_home_header,
+.home_page_body_ctn,
+.home_page_content,
+.home_page_gutter,
+.store_main_capsule_bg,
+.page_content_ctn,
+.page_content,
+.pageheader,
+.workshop_home,
+.market_page,
+.forum_page,
+.blotter_page,
+#application_root,
+#responsive_page_template_content,
+#store_page_background {
+  background-color: var(--glass-bg, rgb(1, 14, 22)) !important;   /* key colour unless a solid Mode */
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Inline style="background-image:url(...)" hero art on game/app hub pages. */
+.game_page_background[style],
+.apphub_background[style],
+.page_background_holder[style],
+.community_home_header[style] {
+  background-image: none !important;
+}
+
+/* Keep content readable: cards and rows become smoked glass. */
+.home_page_content .home_ctn,
+.game_area_purchase_game,
+.game_meta_data,
+.block_content,
+.apphub_Card,
+.blotter_block,
+.forum_topic,
+.market_listing_row,
+.tab_content_ctn,
+.search_results_container,
+.leftcol .block,
+.rightcol .block {
+  background: rgba(var(--glass-tint-rgb, 14, 16, 21), var(--glass-a, .8)) !important;
+  border-radius: calc(var(--glass-radius-px, 10) * 1px);
+}
+
+/* Global header and menus: tinted bar, not a solid slab. */
+#global_header,
+.responsive_header,
+#store_header,
+#store_nav_area .store_nav_bg {
+  background: rgba(var(--glass-tint-rgb, 10, 12, 16), var(--glass-edge-a, 0)) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+html {
+  text-shadow: 0 0 1px rgba(var(--glass-halo-rgb, 0, 0, 0), var(--glass-halo-k)),
+               0 0 3px rgba(var(--glass-halo-rgb, 0, 0, 0), calc(.9 * var(--glass-halo-k))),
+               0 0 8px rgba(var(--glass-halo-rgb, 0, 0, 0), calc(.45 * var(--glass-halo-k)));
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent !important; }
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, .22) !important;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--glass-accent, #4cc2ff) !important; }
+
+a, button, input, select, textarea, [role="button"], [role="tab"] {
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body *, html body *::before, html body *::after { transition: none !important; animation: none !important; }
+}
+
+img,
+video,
+svg,
+canvas,
+input,
+textarea {
+  text-shadow: none;
+}

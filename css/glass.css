@@ -1,0 +1,325 @@
+/*
+ * Glass Desktop - real transparency, readable text.
+ *
+ * How the see-through works:
+ *   tools/SteamGlass.exe marks every Steam window as a Windows layered window
+ *   with a COLOUR KEY of rgb(1, 14, 22). Any pixel painted exactly that colour
+ *   becomes a hole: you see your real desktop and other windows behind Steam.
+ *   Everything else (text, panels, art) stays near-opaque, so it stays sharp.
+ *   When the helper is off or paused, the key is just a solid dark navy.
+ *
+ * Images and video get filter: contrast(.98). That lifts every colour channel
+ * to >= 2.55, so no picture can ever contain red = 1 and punch a hole.
+ *
+ * Variables (set by Millennium settings; defaults live in var() fallbacks so
+ * load order never matters):
+ *   Mode    (css/modes)   -> --glass-mode-a, --glass-edge-a, --glass-halo-k, --glass-bg
+ *   Preset  (css/presets) -> --glass-tint-rgb, --glass-accent, halo colour
+ *   sliders               -> --glass-panel-pct, --glass-bar-pct, --glass-halo-pct,
+ *                            --glass-tint-pct, --glass-radius-px
+ *   Transparency % and the toggle hotkey are applied by SteamGlass.exe.
+ * No Steam hashed class names are used here; js/glass.js handles those.
+ */
+:root {
+  --glass-key: rgb(1, 14, 22);          /* MUST match SteamGlass.exe KEY */
+  --glass-mode-a: calc(var(--glass-panel-pct, 78) / 100);
+  /* Tint strength scales the card opacity of every mode (0-200 %, capped at solid). */
+  --glass-a: min(1, calc(var(--glass-mode-a) * var(--glass-tint-pct, 100) / 100));
+  --glass-edge-a: calc(var(--glass-bar-pct, 0) / 100);
+  --glass-halo-k: calc(var(--glass-halo-pct, 100) / 100);
+  --glass-tint-rgb: 14, 16, 21;
+  --glass-accent: #4cc2ff;
+  --glass-accent-soft: rgba(76, 194, 255, .18);
+  --glass-line: rgba(255, 255, 255, .07);
+  --glass-line-strong: rgba(255, 255, 255, .14);
+  --glass-radius: calc(var(--glass-radius-px, 10) * 1px);
+  --glass-halo-rgb: 0, 0, 0;
+  --glass-halo: 0 0 1px rgba(var(--glass-halo-rgb), calc(1 * var(--glass-halo-k))),
+                0 0 3px rgba(var(--glass-halo-rgb), calc(.9 * var(--glass-halo-k))),
+                0 0 8px rgba(var(--glass-halo-rgb), calc(.45 * var(--glass-halo-k)));
+  --glass-ease: cubic-bezier(.2, .7, .2, 1);
+  --glass-fast: 140ms;
+}
+
+/* ---- See-through base --------------------------------------------------- */
+
+html,
+body,
+#root,
+.DesktopUI,
+.friendsui-container,
+.PopupFullWindow {
+  background: var(--glass-bg, var(--glass-key)) !important;
+  background-image: none !important;
+}
+
+/* Text outline: a tight dark rim plus a soft glow, so text reads over a white
+   desktop, and is invisible over the dark cards. Inherited by all text. */
+html {
+  text-shadow: var(--glass-halo);
+}
+
+img,
+video,
+svg,
+canvas {
+  text-shadow: none;
+}
+
+/* Colour-key guard: game art, screenshots, emotes and video can never contain
+   the key colour (red channel is always >= 2 after this). Visually identical. */
+img,
+video,
+canvas,
+picture {
+  filter: contrast(.98);
+}
+
+/* ---- Window chrome ------------------------------------------------------ */
+
+.DesktopUI,
+.friendsui-container,
+.PopupFullWindow {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.title-area,
+.title-bar-actions,
+.ModalPosition_TopBar {
+  background: rgba(var(--glass-tint-rgb), var(--glass-edge-a)) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.title-area-highlight {
+  opacity: 0;
+}
+
+.title-area-icon:hover {
+  background: rgba(255, 255, 255, .12) !important;
+  border-radius: 6px;
+}
+
+.title-area-icon.closeButton:hover {
+  background: #e81123 !important;
+}
+
+.window_resize_grip {
+  opacity: .25;
+}
+
+/* ---- Cards: dialogs, settings, modals ------------------------------------ */
+
+.DialogContent,
+.DialogContentTransition,
+.DeckVerifiedModalDialog .DialogContent {
+  background: rgba(var(--glass-tint-rgb), var(--glass-a)) !important;
+  background-image: none !important;
+  border: 1px solid var(--glass-line) !important;
+  border-radius: var(--glass-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+
+.DialogContent_InnerWidth {
+  border-radius: var(--glass-radius);
+}
+
+/* Modal scrim: clear around the dialog, so the desktop stays visible. */
+.FullModalOverlay .ModalOverlayBackground,
+.ModalOverlayContent.active {
+  background: var(--glass-bg, var(--glass-key)) !important;
+}
+
+/* ---- Context menus, dropdowns, tooltips, toasts ---------------------------
+   These are separate small windows. Their html is the key colour, so the
+   rounded corners below are real see-through corners. */
+
+.contextMenu,
+.ContextMenuPopupBody,
+[role="menu"],
+[role="listbox"],
+[role="tooltip"] {
+  background: rgba(var(--glass-tint-rgb), max(.94, var(--glass-a))) !important;
+  border: 1px solid var(--glass-line-strong) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .45) !important;
+  overflow: hidden;
+}
+
+.contextMenuItem:hover,
+[role="menuitem"]:hover,
+[role="option"]:hover,
+[role="option"][aria-selected="true"] {
+  background: var(--glass-accent-soft) !important;
+  color: #fff !important;
+}
+
+/* ---- Selected navigation: always clearly visible ------------------------- */
+
+[aria-selected="true"]:not([role="option"]),
+[aria-current="page"],
+[aria-current="true"] {
+  color: #fff !important;
+  box-shadow: inset 0 -2px 0 var(--glass-accent) !important;
+}
+
+/* ---- Controls ------------------------------------------------------------ */
+
+.DesktopUI .DialogTextInputBase,
+.friendsui-container .DialogTextInputBase {
+  background-color: rgba(var(--glass-tint-rgb), .94) !important;
+  border: 1px solid var(--glass-line) !important;
+  border-radius: 6px;
+  text-shadow: none;
+}
+
+.DesktopUI .DialogTextInputBase:focus,
+.friendsui-container .DialogTextInputBase:focus {
+  border-color: var(--glass-accent) !important;
+  box-shadow: 0 0 0 3px var(--glass-accent-soft) !important;
+}
+
+button.DialogButton {
+  border-radius: 6px;
+  text-shadow: none;
+}
+
+button.DialogButton:focus-visible,
+.gpfocus,
+:focus-visible {
+  outline: 2px solid var(--glass-accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--glass-accent);
+  color: #000;
+  text-shadow: none;
+}
+
+/* Smooth hover/focus. Only cheap, composited-friendly properties. */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+[role="tab"],
+[role="menuitem"],
+.DialogButton,
+.contextMenuItem {
+  transition: background-color var(--glass-fast) var(--glass-ease),
+              color var(--glass-fast) var(--glass-ease),
+              border-color var(--glass-fast) var(--glass-ease),
+              box-shadow var(--glass-fast) var(--glass-ease),
+              opacity var(--glass-fast) var(--glass-ease);
+}
+
+/* ---- Scrollbars (Library, Store, Community, menus all match) ------------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, .22) !important;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--glass-accent) !important;
+}
+
+/* ---- Welcome card (js/glass.js, shown once) ------------------------------ */
+
+.glass-welcome {
+  position: fixed;
+  right: 24px;
+  bottom: 56px;
+  z-index: 2147483000;
+  width: min(360px, calc(100vw - 48px));
+  padding: 18px 18px 14px;
+  background: rgba(var(--glass-tint-rgb), .97);
+  border: 1px solid var(--glass-line-strong);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .5);
+  color: #e8edf2;
+  font-size: 13px;
+  line-height: 1.5;
+  text-shadow: none;
+  animation: glass-in 220ms var(--glass-ease);
+}
+
+.glass-welcome h2 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.glass-welcome p {
+  margin: 0 0 8px;
+  color: #b8c2cc;
+}
+
+.glass-welcome b {
+  color: #fff;
+}
+
+.glass-welcome .glass-status {
+  font-size: 12px;
+  color: #8b96a1;
+}
+
+.glass-welcome .glass-status i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #8b96a1;
+}
+
+.glass-welcome .glass-status[data-ok="true"] i { background: #3ddc84; }
+.glass-welcome .glass-status[data-ok="false"] i { background: #ff6b6b; }
+
+.glass-welcome button {
+  margin-top: 6px;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--glass-accent);
+  color: #001019;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes glass-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Accessibility / reduce motion -------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html body *,
+  html body *::before,
+  html body *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root { --glass-a: .97; --glass-edge-a: .95; }
+}

@@ -1,0 +1,1267 @@
+{
+  "name": "Glass Desktop",
+  "author": "GlassDesktop contributors",
+  "description": "Truly see-through Steam: your real desktop and other windows show behind Library, Store, Community, Settings and menus. Text stays sharp. Profiles keep their own background. Needs tools/SteamGlass.exe (starts Steam for you).",
+  "version": "3.0.0",
+  "tags": [
+    "Transparent",
+    "Glass",
+    "Dark",
+    "Minimal"
+  ],
+  "UseDefaultPatches": false,
+  "Patches": [
+    {
+      "MatchRegexString": "^Steam$",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": ".*Settings.*",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": ".*friendsui-container.*",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": ".*ModalDialogPopup.*",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": ".*FullModalOverlay.*",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": ".*Menu$",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": ".*Supernav$",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^notificationtoasts_.*",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^SteamBrowser_Find$",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^OverlayBrowser_Browser$",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^SP Overlay:.*",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^Steam Big Picture Mode$",
+      "TargetCss": "css/glass.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^https://store\\.steampowered\\.com.*",
+      "TargetCss": "css/web.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^https://help\\.steampowered\\.com.*",
+      "TargetCss": "css/web.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^https://checkout\\.steampowered\\.com.*",
+      "TargetCss": "css/web.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^https://steamcommunity\\.com/?([?#].*)?$",
+      "TargetCss": "css/web.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+      "TargetCss": "css/web.css",
+      "TargetJs": "js/glass.js"
+    },
+    {
+      "MatchRegexString": "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$",
+      "TargetCss": "css/web.css",
+      "TargetJs": "js/glass.js"
+    }
+  ],
+  "Conditions": {
+    "Mode": {
+      "description": "Normal and Opaque: solid Steam. Clear: background and bars see-through, cards behind text. Frosted: near-solid cards. Ghost: only text and art. Readable: solid cards and bars. Tinted: whole window fades evenly. OLED Black: pure black. Custom: use the sliders below. (Blur/Acrylic are not possible: Steam's browser paints every pixel solid.)",
+      "tab": "Mode",
+      "default": "Clear",
+      "values": {
+        "Normal": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/normal.css"
+          }
+        },
+        "Opaque": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/opaque.css"
+          }
+        },
+        "Clear": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/clear.css"
+          }
+        },
+        "Frosted": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/frosted.css"
+          }
+        },
+        "Ghost": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/ghost.css"
+          }
+        },
+        "Readable": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/readable.css"
+          }
+        },
+        "Tinted": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/tinted.css"
+          }
+        },
+        "OLED Black": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/oled.css"
+          }
+        },
+        "Custom": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/modes/custom.css"
+          }
+        }
+      }
+    },
+    "Transparency %": {
+      "description": "How see-through all of Steam is (text, art, panels). 0 = solid. Works in every mode except Normal, Opaque and OLED Black. Applies live.",
+      "tab": "Mode",
+      "default": "4",
+      "slider": {
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "cssVariable": "--glass-transparency",
+        "unit": ""
+      }
+    },
+    "Glass tint strength %": {
+      "description": "How dark the glass behind text is, in every mode. Raise it on bright wallpapers so text never washes out. Independent of Transparency %. 100 = the mode's default, 200 = solid.",
+      "tab": "Mode",
+      "default": "100",
+      "slider": {
+        "min": 0,
+        "max": 200,
+        "step": 1,
+        "cssVariable": "--glass-tint-pct",
+        "unit": ""
+      }
+    },
+    "Preset": {
+      "description": "Colour of the glass. Default: neutral smoke. Midnight: deep blue-black. Light glass: lighter slate. High contrast: black cards, bright edges.",
+      "tab": "Mode",
+      "default": "Default",
+      "values": {
+        "Default": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/presets/default.css"
+          }
+        },
+        "Midnight": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/presets/midnight.css"
+          }
+        },
+        "Light glass": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/presets/light.css"
+          }
+        },
+        "High contrast": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/presets/contrast.css"
+          }
+        }
+      }
+    },
+    "Toggle hotkey": {
+      "description": "Global hotkey that turns transparency off and on (for screenshots and screen sharing). Off = solid dark background. Applies live.",
+      "tab": "Mode",
+      "default": "Ctrl+Alt+T",
+      "values": {
+        "Ctrl+Alt+T": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/hotkey/ctrl-alt-t.css"
+          }
+        },
+        "Ctrl+Alt+G": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/hotkey/ctrl-alt-g.css"
+          }
+        },
+        "Ctrl+Shift+F12": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/hotkey/ctrl-shift-f12.css"
+          }
+        },
+        "Off": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/hotkey/off.css"
+          }
+        }
+      }
+    },
+    "Panel opacity %": {
+      "description": "Custom mode: darkness of the cards behind text. 0 = invisible, 100 = solid.",
+      "tab": "Custom",
+      "default": "78",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "cssVariable": "--glass-panel-pct",
+        "unit": ""
+      }
+    },
+    "Bar opacity %": {
+      "description": "Custom mode: sidebar, title bar, bottom bar, Store/Community header. 0 = clear.",
+      "tab": "Custom",
+      "default": "0",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "cssVariable": "--glass-bar-pct",
+        "unit": ""
+      }
+    },
+    "Text halo %": {
+      "description": "Custom mode: dark rim around text. 0 = off.",
+      "tab": "Custom",
+      "default": "100",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "cssVariable": "--glass-halo-pct",
+        "unit": ""
+      }
+    },
+    "Corner radius": {
+      "description": "Roundness of cards and dialogs, in px.",
+      "tab": "Style",
+      "default": "10",
+      "slider": {
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "cssVariable": "--glass-radius-px",
+        "unit": ""
+      }
+    },
+    "Font": {
+      "description": "Font for the whole Steam UI, Store and Community. All ship with Windows (nothing is downloaded).",
+      "tab": "Style",
+      "default": "Steam default",
+      "values": {
+        "Steam default": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/default.css"
+          }
+        },
+        "Segoe UI": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/segoe.css"
+          }
+        },
+        "Segoe UI Display": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/segoe-display.css"
+          }
+        },
+        "Bahnschrift": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/bahnschrift.css"
+          }
+        },
+        "Calibri": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/calibri.css"
+          }
+        },
+        "Candara": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/candara.css"
+          }
+        },
+        "Corbel": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/corbel.css"
+          }
+        },
+        "Trebuchet MS": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/trebuchet.css"
+          }
+        },
+        "Verdana": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/verdana.css"
+          }
+        },
+        "Georgia": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/georgia.css"
+          }
+        },
+        "Cascadia Code": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/fonts/cascadia.css"
+          }
+        }
+      }
+    },
+    "Accent": {
+      "description": "Focus, selection and scrollbar colour.",
+      "tab": "Style",
+      "default": "Sky",
+      "values": {
+        "Sky": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/options/accent-sky.css"
+          }
+        },
+        "Violet": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/options/accent-violet.css"
+          }
+        },
+        "Mint": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/options/accent-mint.css"
+          }
+        },
+        "Rose": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/options/accent-rose.css"
+          }
+        },
+        "Amber": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/options/accent-amber.css"
+          }
+        }
+      }
+    },
+    "Accent glow": {
+      "description": "Glow around hovered buttons and focused inputs.",
+      "tab": "Style",
+      "default": "yes",
+      "values": {
+        "yes": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/glow-on.css"
+          }
+        },
+        "no": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/glow-off.css"
+          }
+        }
+      }
+    },
+    "Window border": {
+      "description": "Thin accent outline around every Steam window.",
+      "tab": "Style",
+      "default": "no",
+      "values": {
+        "yes": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/border-on.css"
+          }
+        },
+        "no": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/border-off.css"
+          }
+        }
+      }
+    },
+    "Dim game art": {
+      "description": "Darken game images slightly so text over them reads better.",
+      "tab": "Style",
+      "default": "no",
+      "values": {
+        "yes": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/art-dim.css"
+          }
+        },
+        "no": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/art-normal.css"
+          }
+        }
+      }
+    },
+    "Reduce motion": {
+      "description": "Turn off animations and transitions (lighter on CPU/GPU).",
+      "tab": "Performance",
+      "default": "no",
+      "values": {
+        "yes": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/motion-off.css"
+          }
+        },
+        "no": {
+          "TargetCss": {
+            "affects": [
+              "^Steam$",
+              ".*Settings.*",
+              ".*friendsui-container.*",
+              ".*ModalDialogPopup.*",
+              ".*FullModalOverlay.*",
+              ".*Menu$",
+              ".*Supernav$",
+              "^notificationtoasts_.*",
+              "^SteamBrowser_Find$",
+              "^OverlayBrowser_Browser$",
+              "^SP Overlay:.*",
+              "^Steam Big Picture Mode$",
+              "^https://store\\.steampowered\\.com.*",
+              "^https://help\\.steampowered\\.com.*",
+              "^https://checkout\\.steampowered\\.com.*",
+              "^https://steamcommunity\\.com/?([?#].*)?$",
+              "^https://steamcommunity\\.com/(app|apps|discussions|workshop|market|groups|games|sharedfiles|search|my|stats|linkfilter|chat|broadcast|news|greenlight|tradeoffer|trade)([/?#].*)?$",
+              "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
+            ],
+            "src": "css/extras/motion-on.css"
+          }
+        }
+      }
+    }
+  }
+}

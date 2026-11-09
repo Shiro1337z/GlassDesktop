@@ -1,0 +1,2 @@
+/* Mode: Frosted - clear background, near-solid cards, softly tinted bars. Window 98%. */
+html:root { --glass-mode-a: .93; --glass-edge-a: .55; --glass-halo-k: .6; }

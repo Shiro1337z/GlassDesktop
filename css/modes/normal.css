@@ -1,0 +1,3 @@
+/* Mode: Normal - Steam's usual dark blue look, no see-through areas. */
+html:root { --glass-a: 1; --glass-bg: #1b2838; --glass-mode-a: 1; --glass-edge-a: 1; --glass-halo-k: 0; }
+html { text-shadow: none !important; }

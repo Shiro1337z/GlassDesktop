@@ -1,0 +1,2 @@
+/* Dim game art a little so text over it reads better. */
+html body img { filter: brightness(.82); }

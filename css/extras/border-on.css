@@ -1,0 +1,3 @@
+/* Accent window border: thin accent outline around every themed window. */
+html body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 2147483647;
+  box-shadow: inset 0 0 0 1px var(--glass-accent); border-radius: 0; }

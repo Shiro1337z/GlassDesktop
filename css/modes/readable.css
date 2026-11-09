@@ -1,0 +1,2 @@
+/* Mode: Readable - clear background, fully solid cards and bars, crisp text. Window 100%. */
+html:root { --glass-mode-a: 1; --glass-edge-a: .95; --glass-halo-k: .4; }

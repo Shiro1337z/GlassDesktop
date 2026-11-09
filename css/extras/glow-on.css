@@ -1,0 +1,2 @@
+/* Accent glow on hover/focus for buttons and inputs. */
+html body button.DialogButton:hover, html body .DialogTextInputBase:focus { box-shadow: 0 0 0 1px var(--glass-accent), 0 0 14px var(--glass-accent-soft) !important; }

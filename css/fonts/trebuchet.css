@@ -1,0 +1,3 @@
+/* Font: "Trebuchet MS" (ships with Windows; no download) */
+html:root { --glass-font: "Trebuchet MS"; }
+html body, html body *:not(svg):not(path):not(i) { font-family: var(--glass-font), "Motiva Sans", "Segoe UI", Arial, sans-serif !important; }

@@ -1,0 +1,3 @@
+/* Preset: Light glass - lighter slate cards, brighter edges, firmer text outline. */
+html:root { --glass-tint-rgb: 52, 58, 70; --glass-line: rgba(255, 255, 255, .16); --glass-line-strong: rgba(255, 255, 255, .24); }
+html:root { --glass-halo-k: max(calc(var(--glass-halo-pct, 100) / 100), .8); }

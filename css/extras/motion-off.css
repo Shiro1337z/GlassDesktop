@@ -1,0 +1,2 @@
+/* Reduce motion: no transitions or animations (lighter on CPU/GPU). */
+html body *, html body *::before, html body *::after { transition: none !important; animation: none !important; }

@@ -1,0 +1,3 @@
+/* Font: "Cascadia Code", "Cascadia Mono", "Consolas" (ships with Windows; no download) */
+html:root { --glass-font: "Cascadia Code", "Cascadia Mono", "Consolas"; }
+html body, html body *:not(svg):not(path):not(i) { font-family: var(--glass-font), "Motiva Sans", "Segoe UI", Arial, sans-serif !important; }

@@ -1,0 +1,2 @@
+/* Preset: High contrast - black cards, bright edges, strongest text outline. */
+html:root { --glass-tint-rgb: 0, 0, 0; --glass-line: rgba(255, 255, 255, .3); --glass-line-strong: rgba(255, 255, 255, .45); --glass-a: max(.92, min(1, calc(var(--glass-mode-a) * var(--glass-tint-pct, 100) / 100))); }
