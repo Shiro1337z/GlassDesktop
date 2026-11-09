@@ -1,3 +1,0 @@
-/* Mode: Ghost - almost only text and game art float over the desktop. */
-html:root { --glass-mode-a: .25; --glass-edge-a: 0; --glass-halo-k: 1; }
-html { text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 10px rgba(0,0,0,.7) !important; }

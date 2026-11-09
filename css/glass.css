@@ -1,34 +1,37 @@
 /*
- * Glass Desktop - real transparency, readable text.
+ * Glass Desktop - frosted glass Steam, pure CSS + JS.
  *
- * How the see-through works:
- *   tools/SteamGlass.exe marks every Steam window as a Windows layered window
- *   with a COLOUR KEY of rgb(1, 14, 22). Any pixel painted exactly that colour
- *   becomes a hole: you see your real desktop and other windows behind Steam.
- *   Everything else (text, panels, art) stays near-opaque, so it stays sharp.
- *   When the helper is off or paused, the key is just a solid dark navy.
- *
- * Images and video get filter: contrast(.98). That lifts every colour channel
- * to >= 2.55, so no picture can ever contain red = 1 and punch a hole.
+ * How the glass works (no helper app, nothing to install):
+ *   The window background is the theme's own soft backdrop: two faint glows
+ *   over a dark gradient in the Glass colour (no images, no downloads).
+ *   Cards, bars and menus are translucent and use backdrop-filter, so the
+ *   backdrop and any content scrolling under them show through frosted.
+ *   Steam's own background art is removed so every page shares the backdrop.
  *
  * Variables (set by Millennium settings; defaults live in var() fallbacks so
  * load order never matters):
- *   Mode    (css/modes)   -> --glass-mode-a, --glass-edge-a, --glass-halo-k, --glass-bg
- *   Preset  (css/presets) -> --glass-tint-rgb, --glass-accent, halo colour
- *   sliders               -> --glass-panel-pct, --glass-bar-pct, --glass-halo-pct,
- *                            --glass-tint-pct, --glass-radius-px
- *   Transparency % and the toggle hotkey are applied by SteamGlass.exe.
+ *   Mode         (css/modes)   -> --glass-mode-a, --glass-edge-base, --glass-halo-base, --glass-glow-mode
+ *   Glass colour (css/presets) -> --glass-tint-rgb, --glass-base-rgb, --glass-glow2-rgb, edge lines
+ *   Accent       (css/options) -> --glass-accent, --glass-accent-rgb
+ *   sliders -> --glass-tint-pct (Card darkness), --glass-bar-pct (Bar darkness),
+ *              --glass-halo-pct (Text outline), --glass-glow-pct (Backdrop glow),
+ *              --glass-blur-px (Frost blur), --glass-radius-px
  * No Steam hashed class names are used here; js/glass.js handles those.
  */
 :root {
-  --glass-key: rgb(1, 14, 22);          /* MUST match SteamGlass.exe KEY */
-  --glass-mode-a: calc(var(--glass-panel-pct, 78) / 100);
-  /* Tint strength scales the card opacity of every mode (0-200 %, capped at solid). */
+  --glass-mode-a: .62;
+  /* Card darkness scales the mode's card opacity (0-200 %, capped at solid). */
   --glass-a: min(1, calc(var(--glass-mode-a) * var(--glass-tint-pct, 100) / 100));
-  --glass-edge-a: calc(var(--glass-bar-pct, 0) / 100);
-  --glass-halo-k: calc(var(--glass-halo-pct, 100) / 100);
+  /* Bar darkness adds backing to the sidebar, title bar and headers. */
+  --glass-edge-a: min(1, calc(var(--glass-edge-base, .35) + var(--glass-bar-pct, 0) / 100));
+  --glass-halo-k: calc(var(--glass-halo-base, .35) * var(--glass-halo-pct, 100) / 100);
+  --glass-glow: calc(var(--glass-glow-pct, 60) / 100 * var(--glass-glow-mode, 1));
+  --glass-blur: blur(calc(var(--glass-blur-px, 18) * 1px)) saturate(1.35);
   --glass-tint-rgb: 14, 16, 21;
+  --glass-base-rgb: 6, 7, 10;
+  --glass-glow2-rgb: 120, 132, 156;
   --glass-accent: #4cc2ff;
+  --glass-accent-rgb: 76, 194, 255;
   --glass-accent-soft: rgba(76, 194, 255, .18);
   --glass-line: rgba(255, 255, 255, .07);
   --glass-line-strong: rgba(255, 255, 255, .14);
@@ -37,24 +40,36 @@
   --glass-halo: 0 0 1px rgba(var(--glass-halo-rgb), calc(1 * var(--glass-halo-k))),
                 0 0 3px rgba(var(--glass-halo-rgb), calc(.9 * var(--glass-halo-k))),
                 0 0 8px rgba(var(--glass-halo-rgb), calc(.45 * var(--glass-halo-k)));
-  --glass-ease: cubic-bezier(.2, .7, .2, 1);
+  /* Strong ease-out: moves at once, settles softly. Built-in `ease` feels limp. */
+  --glass-ease: cubic-bezier(.23, 1, .32, 1);
   --glass-fast: 140ms;
+  --glass-press: 120ms;
 }
 
-/* ---- See-through base --------------------------------------------------- */
+/* ---- Backdrop ----------------------------------------------------------- */
 
-html,
+/* The one painted background. Fixed, so it never scrolls or repaints. */
+html {
+  background-color: rgb(var(--glass-base-rgb)) !important;
+  background-image:
+    radial-gradient(110% 80% at 0% 0%, rgba(var(--glass-accent-rgb), calc(.22 * var(--glass-glow))) 0, transparent 62%),
+    radial-gradient(90% 75% at 100% 100%, rgba(var(--glass-glow2-rgb), calc(.2 * var(--glass-glow))) 0, transparent 60%),
+    linear-gradient(160deg, rgb(var(--glass-tint-rgb)) 0, rgb(var(--glass-base-rgb)) 75%) !important;
+  background-attachment: fixed !important;
+}
+
+/* Steam's own window layers let the backdrop through. */
 body,
 #root,
 .DesktopUI,
 .friendsui-container,
 .PopupFullWindow {
-  background: var(--glass-bg, var(--glass-key)) !important;
+  background: transparent !important;
   background-image: none !important;
 }
 
-/* Text outline: a tight dark rim plus a soft glow, so text reads over a white
-   desktop, and is invisible over the dark cards. Inherited by all text. */
+/* Text outline: a soft dark rim so text on the glass stays crisp.
+   Inherited by all text; 0 % in Text outline turns it off. */
 html {
   text-shadow: var(--glass-halo);
 }
@@ -64,15 +79,6 @@ video,
 svg,
 canvas {
   text-shadow: none;
-}
-
-/* Colour-key guard: game art, screenshots, emotes and video can never contain
-   the key colour (red channel is always >= 2 after this). Visually identical. */
-img,
-video,
-canvas,
-picture {
-  filter: contrast(.98);
 }
 
 /* ---- Window chrome ------------------------------------------------------ */
@@ -89,6 +95,8 @@ picture {
 .title-bar-actions,
 .ModalPosition_TopBar {
   background: rgba(var(--glass-tint-rgb), var(--glass-edge-a)) !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
   border-color: transparent !important;
   box-shadow: none !important;
 }
@@ -119,22 +127,23 @@ picture {
   background-image: none !important;
   border: 1px solid var(--glass-line) !important;
   border-radius: var(--glass-radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  /* Crisp cut glass: a 1px lit top edge, then the drop shadow. */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 10px 30px rgba(0, 0, 0, .35);
 }
 
 .DialogContent_InnerWidth {
   border-radius: var(--glass-radius);
 }
 
-/* Modal scrim: clear around the dialog, so the desktop stays visible. */
+/* Modal scrim: dims and softens the page behind the dialog. */
 .FullModalOverlay .ModalOverlayBackground,
 .ModalOverlayContent.active {
-  background: var(--glass-bg, var(--glass-key)) !important;
+  background: rgba(var(--glass-base-rgb), .55) !important;
 }
 
-/* ---- Context menus, dropdowns, tooltips, toasts ---------------------------
-   These are separate small windows. Their html is the key colour, so the
-   rounded corners below are real see-through corners. */
+/* ---- Context menus, dropdowns, tooltips, toasts --------------------------- */
 
 .contextMenu,
 .ContextMenuPopupBody,
@@ -144,7 +153,9 @@ picture {
   background: rgba(var(--glass-tint-rgb), max(.94, var(--glass-a))) !important;
   border: 1px solid var(--glass-line-strong) !important;
   border-radius: var(--glass-radius) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .45) !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 8px 24px rgba(0, 0, 0, .45) !important;
   overflow: hidden;
 }
 
@@ -199,7 +210,8 @@ button.DialogButton:focus-visible,
   text-shadow: none;
 }
 
-/* Smooth hover/focus. Only cheap, composited-friendly properties. */
+/* Smooth hover/focus on controls. Only colour/shadow/opacity, plus transform
+   for the press below (composited). */
 button,
 a,
 input,
@@ -207,14 +219,27 @@ select,
 textarea,
 [role="button"],
 [role="tab"],
-[role="menuitem"],
-.DialogButton,
-.contextMenuItem {
+.DialogButton {
   transition: background-color var(--glass-fast) var(--glass-ease),
               color var(--glass-fast) var(--glass-ease),
               border-color var(--glass-fast) var(--glass-ease),
               box-shadow var(--glass-fast) var(--glass-ease),
-              opacity var(--glass-fast) var(--glass-ease);
+              opacity var(--glass-fast) var(--glass-ease),
+              transform var(--glass-press) var(--glass-ease);
+}
+
+/* Menu rows are swept by the mouse and arrow keys dozens of times a day:
+   the highlight must follow instantly, never trail behind. */
+[role="menuitem"],
+[role="option"],
+.contextMenuItem {
+  transition: none !important;
+}
+
+/* Press feedback: the button visibly gives under the click. */
+button.DialogButton:active:not(:disabled),
+.glass-welcome button:active {
+  transform: scale(.97);
 }
 
 /* ---- Scrollbars (Library, Store, Community, menus all match) ------------- */
@@ -258,6 +283,12 @@ textarea,
   line-height: 1.5;
   text-shadow: none;
   animation: glass-in 220ms var(--glass-ease);
+  transition: opacity 180ms var(--glass-ease), transform 180ms var(--glass-ease);
+}
+
+.glass-welcome.glass-out {
+  opacity: 0;
+  transform: translateY(6px) scale(.98);
 }
 
 .glass-welcome h2 {
@@ -276,23 +307,6 @@ textarea,
   color: #fff;
 }
 
-.glass-welcome .glass-status {
-  font-size: 12px;
-  color: #8b96a1;
-}
-
-.glass-welcome .glass-status i {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 6px;
-  border-radius: 50%;
-  background: #8b96a1;
-}
-
-.glass-welcome .glass-status[data-ok="true"] i { background: #3ddc84; }
-.glass-welcome .glass-status[data-ok="false"] i { background: #ff6b6b; }
-
 .glass-welcome button {
   margin-top: 6px;
   padding: 6px 14px;
@@ -305,7 +319,7 @@ textarea,
 }
 
 @keyframes glass-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(8px) scale(.98); }
   to { opacity: 1; transform: none; }
 }
 
@@ -321,5 +335,6 @@ textarea,
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  :root { --glass-a: .97; --glass-edge-a: .95; }
+  /* html:root beats Millennium's injected :root slider vars. */
+  html:root { --glass-a: .97; --glass-edge-a: .95; --glass-blur: none; }
 }

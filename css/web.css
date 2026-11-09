@@ -1,30 +1,34 @@
 /*
  * Glass Desktop - Store, Community, Help and other Steam web pages.
  *
- * Same look as the library: the page background is the colour key rgb(1, 14, 22), so you
- * see through to your desktop. Steam's per-game background art (e.g. the
- * CS2 art on Community / store pages) is removed. Content blocks stay as
- * dark smoked glass so text is readable.
+ * Same look as the library: one soft backdrop (no images), Steam's per-game
+ * background art (e.g. the CS2 art on Community / store pages) removed, and
+ * content blocks as frosted smoked glass so text stays readable.
+ *
+ * Web pages may not receive Millennium's slider variables, so every value
+ * here has a var() fallback.
  *
  * Profile pages are NOT matched by skin.json, so profile backgrounds stay.
  */
 
 :root {
-  --glass-mode-a: calc(var(--glass-panel-pct, 78) / 100);
+  --glass-mode-a: .62;
   --glass-a: min(1, calc(var(--glass-mode-a) * var(--glass-tint-pct, 100) / 100));
-  --glass-edge-a: calc(var(--glass-bar-pct, 0) / 100);
-  --glass-halo-k: calc(var(--glass-halo-pct, 100) / 100);
+  --glass-edge-a: min(1, calc(var(--glass-edge-base, .35) + var(--glass-bar-pct, 0) / 100));
+  --glass-halo-k: calc(var(--glass-halo-base, .35) * var(--glass-halo-pct, 100) / 100);
+  --glass-glow: calc(var(--glass-glow-pct, 60) / 100 * var(--glass-glow-mode, 1));
+  --glass-blur: blur(calc(var(--glass-blur-px, 18) * 1px)) saturate(1.35);
 }
 
-/* Colour-key guard: no picture can contain the key colour (see glass.css). */
-img,
-video,
-canvas,
-picture {
-  filter: contrast(.98);
+html {
+  background-color: rgb(var(--glass-base-rgb, 6, 7, 10)) !important;
+  background-image:
+    radial-gradient(110% 80% at 0% 0%, rgba(var(--glass-accent-rgb, 76, 194, 255), calc(.22 * var(--glass-glow))) 0, transparent 62%),
+    radial-gradient(90% 75% at 100% 100%, rgba(var(--glass-glow2-rgb, 120, 132, 156), calc(.2 * var(--glass-glow))) 0, transparent 60%),
+    linear-gradient(160deg, rgb(var(--glass-tint-rgb, 14, 16, 21)) 0, rgb(var(--glass-base-rgb, 6, 7, 10)) 75%) !important;
+  background-attachment: fixed !important;
 }
 
-html,
 body,
 body.v6,
 body.flat_page,
@@ -55,7 +59,7 @@ body.headerless_page,
 #application_root,
 #responsive_page_template_content,
 #store_page_background {
-  background-color: var(--glass-bg, rgb(1, 14, 22)) !important;   /* key colour unless a solid Mode */
+  background-color: transparent !important;
   background-image: none !important;
   box-shadow: none !important;
 }
@@ -83,15 +87,20 @@ body.headerless_page,
 .rightcol .block {
   background: rgba(var(--glass-tint-rgb, 14, 16, 21), var(--glass-a, .8)) !important;
   border-radius: calc(var(--glass-radius-px, 10) * 1px);
+  /* No backdrop-filter here: rows repeat by the hundred (market, forums) and
+     a blur per row costs frames on scroll. The backdrop is fixed anyway. */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
 }
 
-/* Global header and menus: tinted bar, not a solid slab. */
+/* Global header and menus: frosted bar, not a solid slab. */
 #global_header,
 .responsive_header,
 #store_header,
 #store_nav_area .store_nav_bg {
-  background: rgba(var(--glass-tint-rgb, 10, 12, 16), var(--glass-edge-a, 0)) !important;
+  background: rgba(var(--glass-tint-rgb, 10, 12, 16), var(--glass-edge-a, .35)) !important;
   background-image: none !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
   box-shadow: none !important;
 }
 
@@ -112,7 +121,12 @@ html {
 ::-webkit-scrollbar-thumb:hover { background-color: var(--glass-accent, #4cc2ff) !important; }
 
 a, button, input, select, textarea, [role="button"], [role="tab"] {
-  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  transition: background-color 140ms cubic-bezier(.23, 1, .32, 1), color 140ms cubic-bezier(.23, 1, .32, 1),
+              border-color 140ms cubic-bezier(.23, 1, .32, 1), box-shadow 140ms cubic-bezier(.23, 1, .32, 1);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  html:root { --glass-a: .97; --glass-edge-a: .95; --glass-blur: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

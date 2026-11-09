@@ -1,2 +1,2 @@
-/* Preset: Default - neutral smoked glass. */
-html:root { --glass-tint-rgb: 14, 16, 21; }
+/* Glass colour: Smoke - neutral smoked glass (charcoal in Solid mode). */
+html:root { --glass-tint-rgb: 14, 16, 21; --glass-base-rgb: 6, 7, 10; --glass-glow2-rgb: 120, 132, 156; }

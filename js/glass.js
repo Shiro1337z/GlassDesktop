@@ -20,8 +20,6 @@
   "use strict";
   if (window.__glassDesktop) return;
   window.__glassDesktop = true;
-  // Base URL of the theme (for the helper status file), captured at load.
-  const SELF = (document.currentScript && document.currentScript.src) || "";
 
   const ALPHA = "var(--glass-a, .55)";
   const MAX_LUMA = 0.24;      // only dark surfaces; light UI and buttons stay solid
@@ -188,7 +186,7 @@
    *  - big bars touching an edge (title bar, sidebar, bottom bar, frame
    *    border): background -> var(--glass-edge-a), borders/shadows cleared;
    *  - full-window layers with Steam's own CSS background art or colour:
-   *    image removed, colour -> glass, so the wallpaper sits on top.
+   *    image removed, colour cleared, so the theme's backdrop shows.
    * Rules key on class names read at runtime, so React re-renders keep them
    * and nothing is hard-coded. ~20 hit tests per sweep; runs on load, after
    * clicks (navigation) and on resize, debounced.
@@ -225,7 +223,7 @@
       // Backdrop layer (covers half the window or more), whichever probe hit it.
       let d = "";
       if (hasImg && isDefaultArt(img)) d += "background-image:none!important;";
-      if (hasBg && alphaOf(bg) > 0.5) d += "background-color:var(--glass-bg, var(--glass-key, rgb(1, 14, 22)))!important;";
+      if (hasBg && alphaOf(bg) > 0.5) d += "background-color:transparent!important;";
       if (edge) d += "border-color:transparent!important;box-shadow:none!important;";
       if (d) sweepRules.set(sel, `${sel}{${d}}`);
     } else if (edge) {
@@ -233,8 +231,9 @@
       if (!(r.width >= W * 0.6 || r.height >= H * 0.5)) return;
       if (!hasBg && !hasImg && cs.borderStyle === "none" && cs.boxShadow === "none") return;
       let d = "border-color:transparent!important;box-shadow:none!important;";
-      // Bars: tinted by --glass-edge-a over the key colour; 0 = fully clear.
-      if (hasBg) d += `background-color:rgba(${rgbOf(bg)}, var(--glass-edge-a, 0))!important;`;
+      // Bars: frosted, tinted by --glass-edge-a over the backdrop; 0 = fully clear.
+      if (hasBg) d += `background-color:rgba(${rgbOf(bg)}, var(--glass-edge-a, .35))!important;` +
+        "-webkit-backdrop-filter:var(--glass-blur, none);backdrop-filter:var(--glass-blur, none);";
       if (hasImg && isDefaultArt(img)) d += "background-image:none!important;";
       sweepRules.set(sel, `${sel}{${d}}`);
     }
@@ -322,39 +321,31 @@
   }
 
   /*
-   * One-time welcome card in the main Steam window. Dismissed state is kept in
-   * this window's localStorage. Shows whether tools/SteamGlass.exe is running
-   * (it writes tools/helper-status.json; read once from the theme's own host).
+   * One-time welcome card in the main Steam window: where the settings are.
+   * Dismissed state is kept in this window's localStorage. Nothing is fetched.
    */
   function welcome() {
-    const KEY = "glassDesktop.welcome.v3";
+    const KEY = "glassDesktop.welcome.v5";
     if (location.hostname !== "steamloopback.host" || innerWidth < 700 || innerHeight < 450) return;
     if (!/^Steam$/.test(document.title || "")) return;
     try { if (localStorage.getItem(KEY)) return; } catch (_) { return; }
     const card = document.createElement("div");
     card.className = "glass-welcome";
     card.setAttribute("role", "dialog");
+    card.setAttribute("aria-label", "Glass Desktop");
     card.innerHTML =
       "<h2>Glass Desktop is on</h2>" +
-      "<p>Steam is now see-through. Tune it in <b>Millennium &gt; Themes &gt; Glass Desktop &gt; Configure</b>: " +
-      "Mode, Transparency %, Glass tint strength and Preset.</p>" +
-      "<p>Press <b>Ctrl+Alt+T</b> to turn transparency off for screenshots or screen sharing.</p>" +
-      "<div class=\"glass-status\"><i></i><span>Checking helper...</span></div>" +
+      "<p>Tune it in <b>Millennium &gt; Themes &gt; Glass Desktop &gt; Configure</b>: " +
+      "Mode, Glass colour, Card darkness, Frost blur and Backdrop glow.</p>" +
       "<button type=\"button\">Got it</button>";
-    card.querySelector("button").addEventListener("click", () => {
+    const close = () => {
       try { localStorage.setItem(KEY, "1"); } catch (_) {}
-      card.remove();
-    });
+      card.classList.add("glass-out");
+      setTimeout(() => card.remove(), 200);
+    };
+    card.querySelector("button").addEventListener("click", close);
+    card.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
     document.body.appendChild(card);
-    const status = card.querySelector(".glass-status");
-    const say = (ok, text) => { status.dataset.ok = ok; status.querySelector("span").textContent = text; };
-    if (!SELF) { say("unknown", "Helper status unknown."); return; }
-    fetch(new URL("../tools/helper-status.json", SELF).href, { cache: "no-store" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => j && j.running
-        ? say(true, "Helper running" + (j.paused ? " (transparency paused)" : "") + ".")
-        : say(false, "Helper not running: run tools\\start.ps1 (Steam stays solid dark until then)."))
-      .catch(() => say(false, "Helper not running: run tools\\start.ps1 (Steam stays solid dark until then)."));
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });

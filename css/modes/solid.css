@@ -1,0 +1,4 @@
+/* Mode: Solid - no glass at all. Flat colour from Glass colour (Steam blue, Smoke = charcoal,
+   High contrast = OLED black, ...). Lightest on the GPU. */
+html:root { --glass-a: 1; --glass-mode-a: 1; --glass-edge-a: 1; --glass-halo-base: 0; --glass-glow-mode: 0; --glass-blur: none; }
+html { text-shadow: none !important; background-image: none !important; background-color: rgb(var(--glass-tint-rgb)) !important; }

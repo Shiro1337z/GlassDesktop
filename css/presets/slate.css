@@ -1,0 +1,4 @@
+/* Glass colour: Slate - lighter grey-blue cards, brighter edges, firmer text outline. */
+html:root { --glass-tint-rgb: 52, 58, 70; --glass-base-rgb: 22, 25, 32; --glass-glow2-rgb: 150, 162, 186;
+  --glass-line: rgba(255, 255, 255, .16); --glass-line-strong: rgba(255, 255, 255, .24); }
+html:root { --glass-halo-k: max(calc(var(--glass-halo-base, .35) * var(--glass-halo-pct, 100) / 100), .5); }

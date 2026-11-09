@@ -1,0 +1,2 @@
+/* Mode: Glass - frosted, see-through cards and bars over the theme's soft backdrop. */
+html:root { --glass-mode-a: .62; --glass-edge-base: .35; --glass-halo-base: .35; --glass-glow-mode: 1; }

@@ -1,3 +1,0 @@
-/* Mode: Tinted - solid dark Steam; the Transparency % slider fades the whole
-   window evenly (acrylic-style tint, no blur). */
-html:root { --glass-bg: #0c0e13; --glass-mode-a: .9; --glass-edge-a: .9; --glass-halo-k: 0; }

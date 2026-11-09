@@ -1,1 +1,1 @@
-html:root { --glass-accent: #fb7185; --glass-accent-soft: rgba(251,113,133,.2); }
+html:root { --glass-accent: #fb7185; --glass-accent-rgb: 251,113,133; --glass-accent-soft: rgba(251,113,133,.2); }
