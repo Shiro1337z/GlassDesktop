@@ -7,8 +7,8 @@
     "owner": "Shiro1337z",
     "repo_name": "GlassDesktop"
   },
-  "header_image": null,
-  "splash_image": null,
+  "header_image": "https://raw.githubusercontent.com/Shiro1337z/GlassDesktop/main/assets/header.png",
+  "splash_image": "https://raw.githubusercontent.com/Shiro1337z/GlassDesktop/main/assets/splash.png",
   "tags": [
     "Glass",
     "Frosted",
