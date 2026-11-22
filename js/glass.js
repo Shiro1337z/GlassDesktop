@@ -354,3 +354,59 @@
   // Debug helper for the CEF devtools console.
   window.__glassDesktopStats = () => ({ overrideSheets: overrides, coloursCached: cache.size, pendingJobs: jobs.length, sweepRules: sweepRules.size });
 })();
+
+/*
+ * Lean Steam (opt-in condition, default off). Only the main "Steam" window acts.
+ * Writes client settings the way Steam's own settings page does: a protobuf
+ * CMsgClientSettings holding one bool field, base64, into SteamClient.Settings.SetSetting.
+ * Field numbers from sp.js: enable_gpu_accelerated_webviews 5001,
+ * run_at_startup 5004, enable_shader_precache 8000.
+ */
+(() => {
+  "use strict";
+  if (window.__glassLean) return;
+  window.__glassLean = true;
+
+  const WANT = { 5004: false, 5001: true, 8000: true }; // boot off, GPU render on, shader precache on
+
+  const boolMsg = (field, on) => {
+    const b = [];
+    let v = field << 3; // wire type 0 (varint)
+    while (v > 127) { b.push((v & 127) | 128); v >>>= 7; }
+    b.push(v, on ? 1 : 0);
+    return btoa(String.fromCharCode(...b));
+  };
+  window.__glassLeanEncode = boolMsg; // devtools check
+
+  // Popup windows lack SteamClient.Settings and settingsStore; both live in the opener (SharedJSContext).
+  const host = () => [window.opener, window].find((w) => {
+    try { return w && w.SteamClient && w.SteamClient.Settings; } catch (_) { return false; }
+  });
+
+  const apply = (w) => {
+    const res = {};
+    for (const [n, on] of Object.entries(WANT)) {
+      try { w.SteamClient.Settings.SetSetting(boolMsg(+n, on)); res[n] = "ok"; } catch (e) { res[n] = String(e); }
+    }
+    // Friend settings are sent as a full object, so only change them through Steam's own store.
+    const store = w.settingsStore;
+    try {
+      if (!store) res.avatars = "no store";
+      else {
+        if (store.friendSettings && store.friendSettings.bAnimatedAvatars !== false) store.UpdateFriendSetting("bAnimatedAvatars", false);
+        res.avatars = "ok";
+      }
+    } catch (e) { res.avatars = String(e); }
+    window.__glassLeanResult = res;
+  };
+
+  // Title and the condition sheet can arrive after this script; check for up to 15 s.
+  let tries = 0;
+  const poll = setInterval(() => {
+    const w = host();
+    const ready = w && document.title === "Steam" &&
+      getComputedStyle(document.documentElement).getPropertyValue("--glass-lean").trim() === "1";
+    if (ready) { clearInterval(poll); apply(w); }
+    else if (++tries > 30) clearInterval(poll);
+  }, 500);
+})();

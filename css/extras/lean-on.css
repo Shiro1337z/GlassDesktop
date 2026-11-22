@@ -1,0 +1,2 @@
+/* Lean Steam: on. glass.js reads this flag in the main window. */
+html:root { --glass-lean: 1; }

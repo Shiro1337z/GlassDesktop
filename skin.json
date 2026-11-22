@@ -3,6 +3,12 @@
   "author": "GlassDesktop contributors",
   "description": "Frosted glass Steam: translucent, blurred cards and bars over one soft backdrop across Library, Store, Community, Settings and menus, with sharp, readable text. Pure CSS and JS: extract, enable, done.",
   "version": "5.0.0",
+  "github": {
+    "owner": "Shiro1337z",
+    "repo_name": "GlassDesktop"
+  },
+  "header_image": null,
+  "splash_image": null,
   "tags": [
     "Glass",
     "Frosted",
@@ -876,6 +882,25 @@
               "^https://steamcommunity\\.com/(id|profiles)/[^/]+/(home|friends|groups|followedgames|badges|gamecards|inventory|games|screenshots|videos|images|myworkshopfiles|recommended|reviews|wishlist|tradeoffers|edit|notifications|commentnotifications)([/?#].*)?$"
             ],
             "src": "css/extras/motion-on.css"
+          }
+        }
+      }
+    },
+    "Lean Steam": {
+      "description": "On each Steam start, apply RAM-saving client settings: no run at boot, GPU rendering on, shader pre-caching on, animated avatars off. Off leaves your settings alone.",
+      "tab": "Controls",
+      "default": "no",
+      "values": {
+        "yes": {
+          "TargetCss": {
+            "affects": ["^Steam$"],
+            "src": "css/extras/lean-on.css"
+          }
+        },
+        "no": {
+          "TargetCss": {
+            "affects": ["^Steam$"],
+            "src": "css/extras/lean-off.css"
           }
         }
       }
